@@ -1,3 +1,7 @@
+//
+
+use crate::opcodes::Instruction;
+
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy)]
 pub struct ChipAte {
@@ -23,6 +27,7 @@ pub struct ChipAte {
     keypad: [u8; 16],
 }
 
+#[allow(dead_code)]
 impl ChipAte {
     pub fn new(self) -> Self {
         let mut chip_ate = ChipAte {
@@ -60,5 +65,35 @@ impl ChipAte {
         }
         chip_ate
     }
-    fn fetch(&mut self) {}
+    fn fetch(&mut self) -> u16 {
+        let second_index = self.pc + 1;
+        let first_byte = self.memory[self.pc as usize] as u16;
+        let second_byte = self.memory[second_index as usize] as u16;
+        (first_byte << 8) | second_byte
+    }
+    fn execute(&mut self, instruction: Instruction) {
+        match instruction {
+            Instruction::ClearScreen => {
+                self.display = [0; 64 * 32];
+                self.pc += 2;
+            }
+            Instruction::Return => {
+                self.sp -= 1;
+                self.pc = self.stack[self.sp as usize];
+                self.pc += 2;
+            }
+            Instruction::Jump { address } => {
+                self.pc = address;
+            }
+            Instruction::Unknown { opcode } => {
+                println!("unknown opcode {:#X}", opcode);
+                self.pc += 2;
+            }
+        }
+    }
+    fn cycle(&mut self) {
+        let opcode = self.fetch();
+        let instruction = Instruction::from_opcode(opcode);
+        self.execute(instruction);
+    }
 }
