@@ -7,7 +7,6 @@ pub mod ui;
 use chip_ate::ChipAte;
 use crossterm::event::KeyCode;
 use opcodes::Instruction;
-use std::collections::HashMap;
 use std::time::{Duration, Instant};
 
 fn map_key(key_code: KeyCode) -> Option<u8> {
