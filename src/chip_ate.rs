@@ -24,6 +24,12 @@ pub struct ChipAte {
     pub sound_timer: u8,
     //hex keypad state 0 to F 8, 4, 6, and 2 keys usually used for directional input
     pub keypad: [u8; 16],
+    pub pressed_key: Option<u8>,
+}
+#[derive(Debug, PartialEq, Eq)]
+pub enum CycleStatus {
+    Normal,
+    WaitingForKey,
 }
 
 impl Default for ChipAte {
@@ -46,6 +52,7 @@ impl ChipAte {
             delay_timer: 0,
             sound_timer: 0,
             keypad: [0; 16],
+            pressed_key: Some(0),
         };
         const FONTSET: [u8; 80] = [
             0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -237,9 +244,14 @@ impl ChipAte {
                 // load current delay timer value into Vx
                 self.v[vx as usize] = self.delay_timer;
             }
-            Instruction::WaitKey { vx: _ } => {
+            Instruction::WaitKey { vx } => {
                 // wait for a key press; handled in main loop, here we just rewind PC
-                self.pc -= 2; // Retry this instruction until a key is pressed
+                if let Some(key) = self.pressed_key {
+                    self.v[vx as usize] = key;
+                    self.pressed_key = None
+                } else {
+                    self.pc -= 2; // Retry this instruction until a key is pressed
+                }
             }
             Instruction::SetDelay { vx } => {
                 // set delay timer to Vx value
@@ -283,12 +295,25 @@ impl ChipAte {
             }
         }
     }
-    pub fn cycle(&mut self) {
+    pub fn cycle(&mut self) -> CycleStatus {
         let opcode = self.fetch();
-        println!("opcode: {:#X}", opcode);
         let instruction = Instruction::from_opcode(opcode);
-        println!("executing instruction: {:?}", instruction);
-        self.execute(instruction);
+        match instruction {
+            Instruction::WaitKey { vx } => {
+                if let Some(key) = self.pressed_key {
+                    self.v[vx as usize] = key;
+                    self.pressed_key = None;
+                    CycleStatus::Normal
+                } else {
+                    self.pc -= 2;
+                    CycleStatus::WaitingForKey
+                }
+            }
+            _ => {
+                self.execute(instruction);
+                CycleStatus::Normal
+            }
+        }
     }
 
     pub fn set_delay_timer(&mut self, new_time: u8) {
@@ -346,6 +371,30 @@ impl ChipAte {
             _ => {
                 panic!("unknown register: V{:X}", reg);
             }
+        }
+    }
+
+    pub fn render_display(&self) -> String {
+        let mut output = String::with_capacity(64 * 32 + 32); // Pre-allocate for pixels + newlines
+        for y in 0..32 {
+            for x in 0..64 {
+                output.push(if self.display[y * 64 + x] == 1 {
+                    '█'
+                } else {
+                    ' '
+                });
+            }
+            output.push('\n');
+        }
+        output
+    }
+    pub fn update_timers(&mut self) {
+        if self.delay_timer > 0 {
+            self.delay_timer -= 1;
+        }
+        if self.sound_timer > 0 {
+            self.sound_timer -= 1;
+            // In a real implementation, beep here when sound_timer > 0
         }
     }
 }
