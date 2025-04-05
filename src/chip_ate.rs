@@ -52,7 +52,7 @@ impl ChipAte {
             delay_timer: 0,
             sound_timer: 0,
             keypad: [0; 16],
-            pressed_key: Some(0),
+            pressed_key: None,
         };
         const FONTSET: [u8; 80] = [
             0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -248,6 +248,7 @@ impl ChipAte {
                 // wait for a key press; handled in main loop, here we just rewind PC
                 if let Some(key) = self.pressed_key {
                     self.v[vx as usize] = key;
+                    self.keypad[key as usize] = 0;
                     self.pressed_key = None
                 } else {
                     self.pc -= 2; // Retry this instruction until a key is pressed
@@ -302,6 +303,7 @@ impl ChipAte {
             Instruction::WaitKey { vx } => {
                 if let Some(key) = self.pressed_key {
                     self.v[vx as usize] = key;
+                    self.keypad[key as usize] = 0;
                     self.pressed_key = None;
                     CycleStatus::Normal
                 } else {
