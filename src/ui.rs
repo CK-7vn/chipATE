@@ -30,7 +30,7 @@ impl<B: Backend> UI<B> {
                         .borders(Borders::ALL)
                         .border_style(Style::default().fg(Color::Green)),
                 )
-                .marker(ratatui::symbols::Marker::Braille)
+                .marker(ratatui::symbols::Marker::HalfBlock)
                 .paint(|ctx| {
                     for y in 0..32 {
                         for x in 0..64 {
@@ -38,8 +38,8 @@ impl<B: Backend> UI<B> {
                                 ctx.draw(&Rectangle {
                                     x: x as f64,
                                     y: (31 - y) as f64,
-                                    width: 1.0,
-                                    height: 1.0,
+                                    width: 0.75,
+                                    height: 0.5,
                                     color: Color::Green,
                                 });
                             }

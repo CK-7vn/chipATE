@@ -5,6 +5,7 @@ use crossterm::{
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
+use events::AppEvent;
 use ratatui::backend::CrosstermBackend;
 use std::env;
 use std::io::stdout;
@@ -14,6 +15,7 @@ use std::time::{Duration, Instant};
 use tokio::task;
 
 mod chip_ate;
+mod events;
 mod opcodes;
 mod ui;
 
