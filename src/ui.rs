@@ -1,11 +1,8 @@
 use ratatui::{
     backend::Backend,
     layout::Rect,
-    style::{Color, Style},
-    widgets::{
-        canvas::{Canvas, Rectangle},
-        Block, Borders,
-    },
+    style::{Color, Style, Stylize},
+    widgets::{canvas::Canvas, Block, Borders},
     Terminal,
 };
 use std::io;
@@ -26,22 +23,16 @@ impl<B: Backend> UI<B> {
             let canvas = Canvas::default()
                 .block(
                     Block::default()
-                        .title("Chip-8 Emulator")
+                        .title("Chip Ate")
                         .borders(Borders::ALL)
                         .border_style(Style::default().fg(Color::Green)),
                 )
-                .marker(ratatui::symbols::Marker::HalfBlock)
+                .marker(ratatui::symbols::Marker::Block)
                 .paint(|ctx| {
                     for y in 0..32 {
                         for x in 0..64 {
                             if display[y * 64 + x] == 1 {
-                                ctx.draw(&Rectangle {
-                                    x: x as f64,
-                                    y: (31 - y) as f64,
-                                    width: 0.75,
-                                    height: 0.5,
-                                    color: Color::Green,
-                                });
+                                ctx.print(x as f64, (31 - y) as f64, "█".fg(Color::Green));
                             }
                         }
                     }
@@ -49,7 +40,7 @@ impl<B: Backend> UI<B> {
                 .x_bounds([0.0, 64.0])
                 .y_bounds([0.0, 32.0]);
 
-            let display_width = 64 + 2;
+            let display_width = 64 + 2; // with borders
             let display_height = 32 + 2;
             let x_offset = (size.width.saturating_sub(display_width)) / 2;
             let y_offset = (size.height.saturating_sub(display_height)) / 2;
