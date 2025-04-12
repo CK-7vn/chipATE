@@ -1,4 +1,7 @@
+use std::panic;
+
 use crate::opcodes::Instruction;
+use log::debug;
 use rand::Rng;
 
 #[allow(dead_code)]
@@ -87,7 +90,7 @@ impl ChipAte {
     }
 
     fn fetch(&mut self) -> u16 {
-        let low = self.memory[self.pc as usize + 1] as u16; //low byte
+        let low = self.memory[(self.pc + 1) as usize] as u16; //low byte
         let high = self.memory[self.pc as usize] as u16; // high byte
         self.pc += 2; // advance pc to next instruction
                       //    println!(bits)
@@ -95,6 +98,7 @@ impl ChipAte {
     }
 
     fn execute(&mut self, instruction: Instruction) {
+        debug!("Inside of execute instruction: {:?}", instruction);
         match instruction {
             Instruction::ClearScreen => {
                 // Set all display pixels to 0 (black)
@@ -102,8 +106,8 @@ impl ChipAte {
             }
             Instruction::Return => {
                 // Pop the return address from the stack and set PC to it
-                self.sp -= 1;
-                self.pc = self.stack[self.sp as usize];
+                let ret = self.pop();
+                self.pc = ret;
             }
             Instruction::Jump { address } => {
                 // Set PC to the specified address, changing execution flow
@@ -123,6 +127,8 @@ impl ChipAte {
             }
             Instruction::SkipNe { vx, byte } => {
                 // Skip next instruction if Vx does not equal byte
+                debug!("SkipNe value at register vx is: {:?}", self.v[vx as usize]);
+                debug!("SkipNe byte is: {:?}", byte);
                 if self.v[vx as usize] != byte {
                     self.pc += 2;
                 }
@@ -169,7 +175,7 @@ impl ChipAte {
                 self.v[vx as usize] = result;
                 self.v[0xF] = (!borrow) as u8;
             }
-            Instruction::Shr { vx } => {
+            Instruction::Shr { vx, vy } => {
                 // Shift Vx right by 1, VF gets the bit shifted out
                 self.v[0xF] = self.v[vx as usize] & 0x1;
                 self.v[vx as usize] >>= 1;
@@ -246,7 +252,12 @@ impl ChipAte {
             }
             Instruction::WaitKey { vx } => {
                 // wait for a key press; handled in main loop, here we just rewind PC
+                debug!("Inside of WaitKey vx: {:}", vx);
                 if let Some(key) = self.pressed_key {
+                    debug!(
+                        "Inside of WK, pressed key is: {:?}, \n Key is: {:?} \n register is: {:#?} ",
+                        self.pressed_key, key, self.v[vx as usize]
+                    );
                     self.v[vx as usize] = key;
                     self.pressed_key = None
                 } else {
@@ -373,6 +384,14 @@ impl ChipAte {
                 panic!("unknown register: V{:X}", reg);
             }
         }
+    }
+    pub fn push(&mut self, val: u16) {
+        self.stack[self.sp as usize] = val;
+        self.sp += 1;
+    }
+    pub fn pop(&mut self) -> u16 {
+        self.sp -= 1;
+        self.stack[self.sp as usize]
     }
 
     pub fn render_display(&self) -> String {

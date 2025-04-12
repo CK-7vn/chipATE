@@ -10,7 +10,7 @@ use ratatui::backend::CrosstermBackend;
 use std::env;
 use std::io::stdout;
 use std::time::{Duration, Instant};
-
+use tracing::{info, Level};
 mod chip_ate;
 mod events;
 mod opcodes;
@@ -18,6 +18,14 @@ mod ui;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let file = std::fs::File::create("tui.log")?;
+    // only log to file
+    tracing_subscriber::fmt()
+        .with_max_level(tracing::Level::DEBUG)
+        .with_writer(file)
+        .init();
+    println!("after builder");
+
     let args: Vec<String> = env::args().collect();
     if args.len() != 2 && args.len() != 3 {
         eprintln!("usage: {} <rom_path> [cycles_per_frame]", args[0]);
@@ -70,7 +78,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                         }
                         if let Some(key) = map_key(event.code) {
                             chip8.keypad[key as usize] = 1;
-                            chip8.pressed_key = Some(key);
                         }
                     }
                     KeyEventKind::Release => {

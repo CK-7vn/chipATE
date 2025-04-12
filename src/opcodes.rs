@@ -26,7 +26,7 @@ pub enum Instruction {
     Xor { vx: u8, vy: u8 },      //8xy3 bitwise XOR between Vx and Vy stores in Vx
     AddReg { vx: u8, vy: u8 },   //8xy4 adds Vy to vx sets VF to 1 if carry occurs
     Sub { vx: u8, vy: u8 },      //8xy5 - Vy from Vx sets VF to 1 if no borrow
-    Shr { vx: u8 },              //8xy6 shits Vx right by 1 VF gets LSB
+    Shr { vx: u8, vy: u8 },      //8xy6 shits Vx right by 1 VF gets LSB
     SubN { vx: u8, vy: u8 },     //8xy7 sets Vx to Vy - Vx, VF is 1 if no borrow Shl { vx: u8 },
     Shl { vx: u8 },              // 8xyE: Shifts Vx left by 1, VF gets the most significant bit
     SkipNeReg { vx: u8, vy: u8 }, //9xy0 skips next instruct. if Vx != Vy
@@ -53,13 +53,18 @@ pub enum Instruction {
 impl Instruction {
     pub fn from_opcode(opcode: u16) -> Self {
         //extract first nibble to get instruction family
+        let digit1 = (opcode & 0xF000) >> 12;
+        let digit2 = (opcode & 0x0F00) >> 8;
+        let digit3 = (opcode & 0x00F0) >> 4;
+        let digit4 = (opcode & 0x000F);
+
         let first_nibble = opcode & 0xF000;
 
         let x = ((opcode & 0x0F00) >> 8) as u8; //second nib = index of register Vx (0-F)
         let y = ((opcode & 0x00F0) >> 4) as u8; //third nib index of register Vy (0-F)
         let n = (opcode & 0x000F) as u8; //fourth nib immed value
         let nnn = opcode & 0x0FFF; // last 12 bits, = address
-        let kk = (opcode & 0x00FF) as u8; // 8 bit imed value last nib
+        let kk = (opcode & 0xFF) as u8; // 8 bit imed value last nib
 
         match first_nibble {
             0x0000 => match opcode & 0x00FF {
@@ -67,23 +72,26 @@ impl Instruction {
                 0x00EE => Instruction::Return,
                 _ => Instruction::Unknown { opcode },
             },
-            0x1000 => Instruction::Jump { address: nnn }, // jump to add nnn
+            0x1000 => Instruction::Jump {
+                address: opcode & 0x0FFF,
+            }, // jump to add nnn
             0x2000 => Instruction::Call { address: nnn }, // call sub at nn
             0x3000 => Instruction::SkipEq { vx: x, byte: kk }, //skip if Vx == kk
             0x4000 => Instruction::SkipNe { vx: x, byte: kk }, //skip if Vx != kk
             0x5000 => {
+                Instruction::SkipEqReg { vx: x, vy: y }
                 // requires last nibble to be 0
-                if n == 0 {
-                    Instruction::SkipEqReg { vx: x, vy: y }
-                } else {
-                    Instruction::Unknown { opcode }
-                }
+                //if n == 0 {
+                //    Instruction::SkipEqReg { vx: x, vy: y }
+                //} else {
+                //    Instruction::Unknown { opcode }
+                //}
             }
             0x6000 => Instruction::LoadByte { vx: x, byte: kk }, //load kk into Vx
             0x7000 => Instruction::AddByte { vx: x, byte: kk },  //add kk to Vx
             0x8000 => {
                 // 0x8 are alu ops distinguished by last nib
-                match n {
+                match opcode & 0xF {
                     0x0 => Instruction::LoadReg { vx: x, vy: y }, // Vx = Vy
                     0x1 => Instruction::Or { vx: x, vy: y },      // Vx = Vx | Vy
                     0x2 => Instruction::And { vx: x, vy: y },     // Vx = Vx & Vy
@@ -92,10 +100,9 @@ impl Instruction {
                     // (with carry)
                     0x5 => Instruction::Sub { vx: x, vy: y }, // Vx = Vx - Vy
                     // (with borrow)
-                    0x6 => Instruction::Shr { vx: x }, // Vx = Vx >> i
+                    0x6 => Instruction::Shr { vx: x, vy: y }, // Vx = Vx >> i
                     0x7 => Instruction::SubN { vx: x, vy: y }, // Vx = Vy - Vx
-                    // (with brrow)
-                    0xE => Instruction::Shl { vx: x }, // Vx = Vx << i
+                    0xE => Instruction::Shl { vx: x },        // Vx = Vx << i
                     _ => Instruction::Unknown { opcode },
                 }
             }
