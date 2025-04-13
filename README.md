@@ -108,7 +108,6 @@ Please, have at it, lets see how far we can take emulator TUI's to the 🌝
 
 Clyde -  keighan@unlockedlabs.org
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/ck-7vn/chipATE)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
