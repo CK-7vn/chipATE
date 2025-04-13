@@ -7,6 +7,7 @@ use ratatui::{
 };
 use std::io;
 
+#[derive(Debug)]
 pub struct UI<B: Backend> {
     pub terminal: Terminal<B>,
 }
@@ -25,14 +26,14 @@ impl<B: Backend> UI<B> {
                     Block::default()
                         .title("Chip Ate")
                         .borders(Borders::ALL)
-                        .border_style(Style::default().fg(Color::Green)),
+                        .border_style(Style::default().fg(Color::White)),
                 )
                 .marker(ratatui::symbols::Marker::Block)
                 .paint(|ctx| {
                     for y in 0..32 {
                         for x in 0..64 {
                             if display[y * 64 + x] == 1 {
-                                ctx.print(x as f64, (31 - y) as f64, "█".fg(Color::Green));
+                                ctx.print(x as f64, (32 - y) as f64, "█".fg(Color::White));
                             }
                         }
                     }
@@ -40,7 +41,7 @@ impl<B: Backend> UI<B> {
                 .x_bounds([0.0, 64.0])
                 .y_bounds([0.0, 32.0]);
 
-            let display_width = 64 + 2; // with borders
+            let display_width = 64;
             let display_height = 32 + 2;
             let x_offset = (size.width.saturating_sub(display_width)) / 2;
             let y_offset = (size.height.saturating_sub(display_height)) / 2;

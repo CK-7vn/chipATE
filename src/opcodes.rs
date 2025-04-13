@@ -53,11 +53,6 @@ pub enum Instruction {
 impl Instruction {
     pub fn from_opcode(opcode: u16) -> Self {
         //extract first nibble to get instruction family
-        let digit1 = (opcode & 0xF000) >> 12;
-        let digit2 = (opcode & 0x0F00) >> 8;
-        let digit3 = (opcode & 0x00F0) >> 4;
-        let digit4 = (opcode & 0x000F);
-
         let first_nibble = opcode & 0xF000;
 
         let x = ((opcode & 0x0F00) >> 8) as u8; //second nib = index of register Vx (0-F)
@@ -78,15 +73,7 @@ impl Instruction {
             0x2000 => Instruction::Call { address: nnn }, // call sub at nn
             0x3000 => Instruction::SkipEq { vx: x, byte: kk }, //skip if Vx == kk
             0x4000 => Instruction::SkipNe { vx: x, byte: kk }, //skip if Vx != kk
-            0x5000 => {
-                Instruction::SkipEqReg { vx: x, vy: y }
-                // requires last nibble to be 0
-                //if n == 0 {
-                //    Instruction::SkipEqReg { vx: x, vy: y }
-                //} else {
-                //    Instruction::Unknown { opcode }
-                //}
-            }
+            0x5000 => Instruction::SkipEqReg { vx: x, vy: y },
             0x6000 => Instruction::LoadByte { vx: x, byte: kk }, //load kk into Vx
             0x7000 => Instruction::AddByte { vx: x, byte: kk },  //add kk to Vx
             0x8000 => {

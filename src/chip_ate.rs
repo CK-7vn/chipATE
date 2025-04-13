@@ -76,7 +76,7 @@ impl ChipAte {
             0xF0, 0x80, 0xF0, 0x80, 0x80, // F
         ];
         for (i, &byte) in FONTSET.iter().enumerate() {
-            chip_ate.memory[i] = byte;
+            chip_ate.memory[0x50 + i] = byte;
         }
         chip_ate
     }
@@ -126,9 +126,6 @@ impl ChipAte {
                 }
             }
             Instruction::SkipNe { vx, byte } => {
-                // Skip next instruction if Vx does not equal byte
-                debug!("SkipNe value at register vx is: {:?}", self.v[vx as usize]);
-                debug!("SkipNe byte is: {:?}", byte);
                 if self.v[vx as usize] != byte {
                     self.pc += 2;
                 }
@@ -175,7 +172,7 @@ impl ChipAte {
                 self.v[vx as usize] = result;
                 self.v[0xF] = (!borrow) as u8;
             }
-            Instruction::Shr { vx, vy } => {
+            Instruction::Shr { vx, vy: _ } => {
                 // Shift Vx right by 1, VF gets the bit shifted out
                 self.v[0xF] = self.v[vx as usize] & 0x1;
                 self.v[vx as usize] >>= 1;
@@ -207,26 +204,23 @@ impl ChipAte {
             }
             Instruction::Random { vx, byte } => {
                 // Generate a random byte, AND it with byte, store in Vx
-                let random_byte = rand::rng().random::<u8>();
+                let mut rng = rand::rng();
+                let random_byte: u8 = rng.random();
                 self.v[vx as usize] = random_byte & byte;
             }
             Instruction::Draw { vx, vy, n } => {
-                // Draw an n-byte sprite from memory[I] at coordinates (Vx, Vy)
-                // Sprites are 8 pixels wide, n pixels tall; VF set to 1 on collision
-                let x = self.v[vx as usize] as usize % 64; // Wrap around 64-pixel width
-                let y = self.v[vy as usize] as usize % 32; // Wrap around 32-pixel height
-                self.v[0xF] = 0; // Reset collision flag
+                let x = self.v[vx as usize] as usize % 64;
+                let y = self.v[vy as usize] as usize % 32;
+                self.v[0xF] = 0;
                 for row in 0..n as usize {
-                    let sprite = self.memory[(self.i + row as u16) as usize]; // Get sprite row
+                    let sprite = self.memory[(self.i + row as u16) as usize];
                     for col in 0..8 {
                         if (sprite & (0x80 >> col)) != 0 {
-                            // Check each bit (left to right)
-                            let idx = (y + row) * 64 + (x + col); // Calculate display index
+                            let idx = (y + row) * 64 + (x + col);
                             if idx < 64 * 32 {
-                                // Ensure within bounds
                                 let pixel = &mut self.display[idx];
                                 if *pixel == 1 {
-                                    self.v[0xF] = 1; // Collision if pixel was already on
+                                    self.v[0xF] = 1; // collision if pixel was already on
                                 }
                                 *pixel ^= 1; // XOR to toggle pixel state
                             }
@@ -251,17 +245,18 @@ impl ChipAte {
                 self.v[vx as usize] = self.delay_timer;
             }
             Instruction::WaitKey { vx } => {
-                // wait for a key press; handled in main loop, here we just rewind PC
-                debug!("Inside of WaitKey vx: {:}", vx);
-                if let Some(key) = self.pressed_key {
-                    debug!(
-                        "Inside of WK, pressed key is: {:?}, \n Key is: {:?} \n register is: {:#?} ",
-                        self.pressed_key, key, self.v[vx as usize]
-                    );
+                let mut found = None;
+                for (i, &key_state) in self.keypad.iter().enumerate() {
+                    if key_state == 1 {
+                        found = Some(i as u8);
+                        break;
+                    }
+                }
+                if let Some(key) = found {
                     self.v[vx as usize] = key;
-                    self.pressed_key = None
+                    self.keypad[key as usize] = 0;
                 } else {
-                    self.pc -= 2; // Retry this instruction until a key is pressed
+                    self.pc -= 2;
                 }
             }
             Instruction::SetDelay { vx } => {
@@ -279,7 +274,7 @@ impl ChipAte {
             Instruction::LoadFont { vx } => {
                 // set I to the memory address of the font sprite for digit Vx
                 // each sprite is 5 bytes, so Vx * 5 gives the offset from 0x000
-                self.i = (self.v[vx as usize] * 5) as u16;
+                self.i = 0x50 + (self.v[vx as usize] * 5) as u16;
             }
             Instruction::StoreBCD { vx } => {
                 // Convert Vx to binary-coded decimal and store at I, I+1, I+2
