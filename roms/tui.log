@@ -1,0 +1,162 @@
+[2m2025-04-25T17:18:57.659730Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 536 }    
+[2m2025-04-25T17:18:57.659868Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 11, byte: 0 }    
+[2m2025-04-25T17:18:57.659956Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 12, byte: 0 }    
+[2m2025-04-25T17:18:57.660003Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadReg { vx: 0, vy: 11 }    
+[2m2025-04-25T17:18:57.660033Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadReg { vx: 1, vy: 12 }    
+[2m2025-04-25T17:18:57.660062Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadI { address: 998 }    
+[2m2025-04-25T17:18:57.660091Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: StoreRegs { vx: 1 }    
+[2m2025-04-25T17:18:57.660120Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadI { address: 964 }    
+[2m2025-04-25T17:18:57.660159Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadRegs { vx: 15 }    
+[2m2025-04-25T17:18:57.660198Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadI { address: 948 }    
+[2m2025-04-25T17:18:57.660236Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: StoreRegs { vx: 15 }    
+[2m2025-04-25T17:18:57.660274Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadI { address: 998 }    
+[2m2025-04-25T17:18:57.667884Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadRegs { vx: 1 }    
+[2m2025-04-25T17:18:57.667966Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadReg { vx: 11, vy: 0 }    
+[2m2025-04-25T17:18:57.667991Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadReg { vx: 12, vy: 1 }    
+[2m2025-04-25T17:18:57.668009Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: ClearScreen    
+[2m2025-04-25T17:18:57.668025Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 14, byte: 1 }    
+[2m2025-04-25T17:18:57.668041Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 0, byte: 19 }    
+[2m2025-04-25T17:18:57.668057Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 1, byte: 3 }    
+[2m2025-04-25T17:18:57.668072Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadI { address: 922 }    
+[2m2025-04-25T17:18:57.668088Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 1 }    
+[2m2025-04-25T17:18:57.668105Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.668120Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 43 }    
+[2m2025-04-25T17:18:57.668136Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 574 }    
+[2m2025-04-25T17:18:57.684025Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 1 }    
+[2m2025-04-25T17:18:57.684096Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.684118Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 43 }    
+[2m2025-04-25T17:18:57.684137Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 574 }    
+[2m2025-04-25T17:18:57.684156Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 1 }    
+[2m2025-04-25T17:18:57.684202Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.684223Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 43 }    
+[2m2025-04-25T17:18:57.684242Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 0, byte: 19 }    
+[2m2025-04-25T17:18:57.684262Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 1, byte: 8 }    
+[2m2025-04-25T17:18:57.684282Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 1, byte: 35 }    
+[2m2025-04-25T17:18:57.684302Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 574 }    
+[2m2025-04-25T17:18:57.684321Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 1 }    
+[2m2025-04-25T17:18:57.703727Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.703807Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 43 }    
+[2m2025-04-25T17:18:57.703834Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 574 }    
+[2m2025-04-25T17:18:57.703998Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 1 }    
+[2m2025-04-25T17:18:57.704037Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.704049Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 43 }    
+[2m2025-04-25T17:18:57.704060Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 574 }    
+[2m2025-04-25T17:18:57.704071Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 1 }    
+[2m2025-04-25T17:18:57.704083Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.704095Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 43 }    
+[2m2025-04-25T17:18:57.704111Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 0, byte: 19 }    
+[2m2025-04-25T17:18:57.704125Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 1, byte: 8 }    
+[2m2025-04-25T17:18:57.721824Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 1, byte: 35 }    
+[2m2025-04-25T17:18:57.721873Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 574 }    
+[2m2025-04-25T17:18:57.721888Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 1 }    
+[2m2025-04-25T17:18:57.721913Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.721928Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 43 }    
+[2m2025-04-25T17:18:57.721943Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 574 }    
+[2m2025-04-25T17:18:57.721959Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 1 }    
+[2m2025-04-25T17:18:57.721979Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.722009Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 43 }    
+[2m2025-04-25T17:18:57.722026Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 574 }    
+[2m2025-04-25T17:18:57.722041Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 1 }    
+[2m2025-04-25T17:18:57.722059Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.738546Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 43 }    
+[2m2025-04-25T17:18:57.738611Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 0, byte: 19 }    
+[2m2025-04-25T17:18:57.738632Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 1, byte: 8 }    
+[2m2025-04-25T17:18:57.738649Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 1, byte: 35 }    
+[2m2025-04-25T17:18:57.738665Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 574 }    
+[2m2025-04-25T17:18:57.738680Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 1 }    
+[2m2025-04-25T17:18:57.738698Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.738713Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 43 }    
+[2m2025-04-25T17:18:57.738728Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 574 }    
+[2m2025-04-25T17:18:57.738743Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 1 }    
+[2m2025-04-25T17:18:57.738759Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.738775Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 43 }    
+[2m2025-04-25T17:18:57.755791Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 574 }    
+[2m2025-04-25T17:18:57.755833Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 1 }    
+[2m2025-04-25T17:18:57.755842Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.755849Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 43 }    
+[2m2025-04-25T17:18:57.755855Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 0, byte: 19 }    
+[2m2025-04-25T17:18:57.755861Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 1, byte: 8 }    
+[2m2025-04-25T17:18:57.755867Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 1, byte: 35 }    
+[2m2025-04-25T17:18:57.755873Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 0, byte: 19 }    
+[2m2025-04-25T17:18:57.755879Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 1, byte: 3 }    
+[2m2025-04-25T17:18:57.755885Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadI { address: 923 }    
+[2m2025-04-25T17:18:57.755891Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 15 }    
+[2m2025-04-25T17:18:57.755899Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.773208Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 51 }    
+[2m2025-04-25T17:18:57.773264Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 596 }    
+[2m2025-04-25T17:18:57.773279Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 15 }    
+[2m2025-04-25T17:18:57.773296Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.773310Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 51 }    
+[2m2025-04-25T17:18:57.773323Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 596 }    
+[2m2025-04-25T17:18:57.773336Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 15 }    
+[2m2025-04-25T17:18:57.773351Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.773364Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 51 }    
+[2m2025-04-25T17:18:57.773377Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 596 }    
+[2m2025-04-25T17:18:57.773390Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 15 }    
+[2m2025-04-25T17:18:57.773404Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.791064Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 51 }    
+[2m2025-04-25T17:18:57.791118Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 0, byte: 19 }    
+[2m2025-04-25T17:18:57.791130Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 1, byte: 15 }    
+[2m2025-04-25T17:18:57.791142Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 10 }    
+[2m2025-04-25T17:18:57.791155Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.791167Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 51 }    
+[2m2025-04-25T17:18:57.791178Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 608 }    
+[2m2025-04-25T17:18:57.791189Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 10 }    
+[2m2025-04-25T17:18:57.791201Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.791212Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 51 }    
+[2m2025-04-25T17:18:57.791223Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 608 }    
+[2m2025-04-25T17:18:57.791235Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 10 }    
+[2m2025-04-25T17:18:57.809989Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.810129Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 51 }    
+[2m2025-04-25T17:18:57.810182Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Jump { address: 608 }    
+[2m2025-04-25T17:18:57.810210Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 0, vy: 1, n: 10 }    
+[2m2025-04-25T17:18:57.810276Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 0, byte: 8 }    
+[2m2025-04-25T17:18:57.810306Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: SkipEq { vx: 0, byte: 51 }    
+[2m2025-04-25T17:18:57.810333Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Call { address: 870 }    
+[2m2025-04-25T17:18:57.810361Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 3, byte: 5 }    
+[2m2025-04-25T17:18:57.810391Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 4, byte: 10 }    
+[2m2025-04-25T17:18:57.810422Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadI { address: 943 }    
+[2m2025-04-25T17:18:57.810454Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 3, vy: 4, n: 5 }    
+[2m2025-04-25T17:18:57.810491Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 3, byte: 2 }    
+[2m2025-04-25T17:18:57.827722Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 4, byte: 6 }    
+[2m2025-04-25T17:18:57.827859Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadI { address: 998 }    
+[2m2025-04-25T17:18:57.827889Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: StoreBCD { vx: 11 }    
+[2m2025-04-25T17:18:57.827935Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Call { address: 904 }    
+[2m2025-04-25T17:18:57.827963Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadRegs { vx: 2 }    
+[2m2025-04-25T17:18:57.827994Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadFont { vx: 0 }    
+[2m2025-04-25T17:18:57.828023Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Call { address: 916 }    
+[2m2025-04-25T17:18:57.828051Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 3, vy: 4, n: 5 }    
+[2m2025-04-25T17:18:57.828085Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 3, byte: 5 }    
+[2m2025-04-25T17:18:57.828110Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Return    
+[2m2025-04-25T17:18:57.828133Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadFont { vx: 1 }    
+[2m2025-04-25T17:18:57.828156Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Call { address: 916 }    
+[2m2025-04-25T17:18:57.845840Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 3, vy: 4, n: 5 }    
+[2m2025-04-25T17:18:57.846032Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 3, byte: 5 }    
+[2m2025-04-25T17:18:57.846086Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Return    
+[2m2025-04-25T17:18:57.846120Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadFont { vx: 2 }    
+[2m2025-04-25T17:18:57.846151Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 3, vy: 4, n: 5 }    
+[2m2025-04-25T17:18:57.846181Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 3, byte: 5 }    
+[2m2025-04-25T17:18:57.846209Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Return    
+[2m2025-04-25T17:18:57.846235Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 3, byte: 50 }    
+[2m2025-04-25T17:18:57.846324Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 4, byte: 10 }    
+[2m2025-04-25T17:18:57.846356Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadI { address: 938 }    
+[2m2025-04-25T17:18:57.846390Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 3, vy: 4, n: 5 }    
+[2m2025-04-25T17:18:57.846418Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadByte { vx: 3, byte: 47 }    
+[2m2025-04-25T17:18:57.864557Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 4, byte: 6 }    
+[2m2025-04-25T17:18:57.864639Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadI { address: 998 }    
+[2m2025-04-25T17:18:57.864659Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: StoreBCD { vx: 12 }    
+[2m2025-04-25T17:18:57.864677Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadRegs { vx: 2 }    
+[2m2025-04-25T17:18:57.864696Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadFont { vx: 0 }    
+[2m2025-04-25T17:18:57.864714Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Call { address: 916 }    
+[2m2025-04-25T17:18:57.864730Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 3, vy: 4, n: 5 }    
+[2m2025-04-25T17:18:57.864749Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 3, byte: 5 }    
+[2m2025-04-25T17:18:57.864766Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Return    
+[2m2025-04-25T17:18:57.864783Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadFont { vx: 1 }    
+[2m2025-04-25T17:18:57.864801Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Call { address: 916 }    
+[2m2025-04-25T17:18:57.864820Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 3, vy: 4, n: 5 }    
+[2m2025-04-25T17:18:57.882164Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 3, byte: 5 }    
+[2m2025-04-25T17:18:57.882225Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Return    
+[2m2025-04-25T17:18:57.882243Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: LoadFont { vx: 2 }    
+[2m2025-04-25T17:18:57.882259Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Draw { vx: 3, vy: 4, n: 5 }    
+[2m2025-04-25T17:18:57.882276Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: AddByte { vx: 3, byte: 5 }    
+[2m2025-04-25T17:18:57.882291Z[0m [34mDEBUG[0m [2mchipATE::chip_ate[0m[2m:[0m Inside of execute instruction: Return    

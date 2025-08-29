@@ -6,7 +6,6 @@
 //  0xF000 = 1111 0000 0000 0000  Isolate first nibble
 //  0x00FF = 0000 0000 1111 1111 Isolate lower 8 bits
 //  0x0FFF = 0000 1111 1111 1111 Isolates lower 12 bits
-//
 
 #[derive(Debug)]
 pub enum Instruction {
@@ -26,7 +25,7 @@ pub enum Instruction {
     Xor { vx: u8, vy: u8 },      //8xy3 bitwise XOR between Vx and Vy stores in Vx
     AddReg { vx: u8, vy: u8 },   //8xy4 adds Vy to vx sets VF to 1 if carry occurs
     Sub { vx: u8, vy: u8 },      //8xy5 - Vy from Vx sets VF to 1 if no borrow
-    Shr { vx: u8, vy: u8 },      //8xy6 shits Vx right by 1 VF gets LSB
+    Shr { vx: u8, vy: u8 },      //8xy6 shifts Vx right by 1 VF gets LSB
     SubN { vx: u8, vy: u8 },     //8xy7 sets Vx to Vy - Vx, VF is 1 if no borrow Shl { vx: u8 },
     Shl { vx: u8 },              // 8xyE: Shifts Vx left by 1, VF gets the most significant bit
     SkipNeReg { vx: u8, vy: u8 }, //9xy0 skips next instruct. if Vx != Vy
@@ -42,8 +41,7 @@ pub enum Instruction {
     SetDelay { vx: u8 },  //Fx15 sets dealy timer to value in Vx
     SetSound { vx: u8 },  //Fx18 sets sound timer to value in Vx
     AddI { vx: u8 },      //Fx1E adds Vx to I
-    LoadFont { vx: u8 },  //Fx29 Sets I to mem address of the font sprite for digit
-    //Vx
+    LoadFont { vx: u8 },  //Fx29 Sets I to mem address of the font sprite for digit/Vx
     StoreBCD { vx: u8 },  //Fx33 stores binary decimal of Vx at I, I+1 I+2
     StoreRegs { vx: u8 }, //Fx55 stores reg V0 through Vx into mem starting at I
     LoadRegs { vx: u8 },  //Fx65 Loads reg V0 through Vx from Mem starting at I

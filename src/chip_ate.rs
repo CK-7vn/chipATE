@@ -1,33 +1,33 @@
-use std::panic;
-
 use crate::opcodes::Instruction;
 use log::debug;
 use rand::Rng;
+use std::sync::{Arc, Mutex};
+use std::thread;
+use std::time::Duration;
+
+const MEMORY_SIZE: usize = 4096;
+const PROGRAM_START: u16 = 0x200;
+const FONT_START: u16 = 0x50;
+const DISPLAY_WIDTH: usize = 64;
+const DISPLAY_HEIGHT: usize = 32;
+const STACK_SIZE: usize = 16;
+const REGISTER_COUNT: usize = 16;
 
 #[allow(dead_code)]
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug)]
 pub struct ChipAte {
-    //4Kb of memory 1000 memory locations
-    pub memory: [u8; 4096],
-    // 16 general purpose registers v0-vf
-    pub v: [u8; 16],
-    //index register
+    pub memory: [u8; MEMORY_SIZE],
+    pub v: [u8; REGISTER_COUNT],
     pub i: u16,
-    //program coutner
     pub pc: u16,
-    //stack
-    pub stack: [u16; 16],
-    //stack pointer
+    pub stack: [u16; STACK_SIZE],
     pub sp: u8,
-
-    //display 64 x 32 pixels
-    pub display: [u8; 64 * 32],
-
+    pub display: [u8; DISPLAY_WIDTH * DISPLAY_HEIGHT],
     pub delay_timer: u8,
     pub sound_timer: u8,
-    //hex keypad state 0 to F 8, 4, 6, and 2 keys usually used for directional input
-    pub keypad: [u8; 16],
+    pub keypad: [u8; REGISTER_COUNT],
     pub pressed_key: Option<u8>,
+    pub beep_active: Arc<Mutex<bool>>,
 }
 #[derive(Debug, PartialEq, Eq)]
 pub enum CycleStatus {
@@ -44,18 +44,33 @@ impl Default for ChipAte {
 #[allow(dead_code)]
 impl ChipAte {
     pub fn new() -> Self {
+        let beep_active = Arc::new(Mutex::new(false));
+        let beep_thread = beep_active.clone();
+        
+        thread::spawn(move || {
+            loop {
+                thread::sleep(Duration::from_millis(50));
+                if let Ok(active) = beep_thread.lock() {
+                    if *active {
+                        print!("\x07");
+                    }
+                }
+            }
+        });
+        
         let mut chip_ate = ChipAte {
-            memory: [0; 4096],
-            stack: [0; 16],
-            v: [0; 16],
+            memory: [0; MEMORY_SIZE],
+            stack: [0; STACK_SIZE],
+            v: [0; REGISTER_COUNT],
             i: 0,
-            pc: 0x200,
+            pc: PROGRAM_START,
             sp: 0,
-            display: [0; 64 * 32],
+            display: [0; DISPLAY_WIDTH * DISPLAY_HEIGHT],
             delay_timer: 0,
             sound_timer: 0,
-            keypad: [0; 16],
+            keypad: [0; REGISTER_COUNT],
             pressed_key: None,
+            beep_active,
         };
         const FONTSET: [u8; 80] = [
             0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -76,25 +91,30 @@ impl ChipAte {
             0xF0, 0x80, 0xF0, 0x80, 0x80, // F
         ];
         for (i, &byte) in FONTSET.iter().enumerate() {
-            chip_ate.memory[0x50 + i] = byte;
+            chip_ate.memory[FONT_START as usize + i] = byte;
         }
         chip_ate
     }
 
-    pub fn load_rom(&mut self, path: &str) -> Result<(), std::io::Error> {
-        let rom = std::fs::read(path)?; // read rom into a byte vector
+    pub fn load_rom(&mut self, path: &str) -> Result<(), Box<dyn std::error::Error>> {
+        let rom = std::fs::read(path)?;
+        if rom.len() > MEMORY_SIZE - PROGRAM_START as usize {
+            return Err(format!("ROM too large: {} bytes, max {} bytes", rom.len(), MEMORY_SIZE - PROGRAM_START as usize).into());
+        }
         for (i, &byte) in rom.iter().enumerate() {
-            self.memory[0x200 + i] = byte; // copying each byte into mem
+            self.memory[PROGRAM_START as usize + i] = byte;
         }
         Ok(())
     }
 
     fn fetch(&mut self) -> u16 {
-        let low = self.memory[(self.pc + 1) as usize] as u16; //low byte
-        let high = self.memory[self.pc as usize] as u16; // high byte
-        self.pc += 2; // advance pc to next instruction
-                      //    println!(bits)
-        (high << 8) | low //opcode
+        if self.pc as usize + 1 >= MEMORY_SIZE {
+            return 0;
+        }
+        let high = self.memory[self.pc as usize] as u16;
+        let low = self.memory[(self.pc + 1) as usize] as u16;
+        self.pc += 2;
+        (high << 8) | low
     }
 
     fn execute(&mut self, instruction: Instruction) {
@@ -102,7 +122,7 @@ impl ChipAte {
         match instruction {
             Instruction::ClearScreen => {
                 // Set all display pixels to 0 (black)
-                self.display = [0; 64 * 32];
+                self.display = [0; DISPLAY_WIDTH * DISPLAY_HEIGHT];
             }
             Instruction::Return => {
                 // Pop the return address from the stack and set PC to it
@@ -173,7 +193,6 @@ impl ChipAte {
                 self.v[0xF] = (!borrow) as u8;
             }
             Instruction::Shr { vx, vy: _ } => {
-                // Shift Vx right by 1, VF gets the bit shifted out
                 self.v[0xF] = self.v[vx as usize] & 0x1;
                 self.v[vx as usize] >>= 1;
             }
@@ -209,20 +228,20 @@ impl ChipAte {
                 self.v[vx as usize] = random_byte & byte;
             }
             Instruction::Draw { vx, vy, n } => {
-                let x = self.v[vx as usize] as usize % 64;
-                let y = self.v[vy as usize] as usize % 32;
+                let x = self.v[vx as usize] as usize % DISPLAY_WIDTH;
+                let y = self.v[vy as usize] as usize % DISPLAY_HEIGHT;
                 self.v[0xF] = 0;
                 for row in 0..n as usize {
                     let sprite = self.memory[(self.i + row as u16) as usize];
                     for col in 0..8 {
                         if (sprite & (0x80 >> col)) != 0 {
-                            let idx = (y + row) * 64 + (x + col);
-                            if idx < 64 * 32 {
+                            let idx = (y + row) * DISPLAY_WIDTH + (x + col);
+                            if idx < DISPLAY_WIDTH * DISPLAY_HEIGHT {
                                 let pixel = &mut self.display[idx];
                                 if *pixel == 1 {
-                                    self.v[0xF] = 1; // collision if pixel was already on
+                                    self.v[0xF] = 1;
                                 }
-                                *pixel ^= 1; // XOR to toggle pixel state
+                                *pixel ^= 1;
                             }
                         }
                     }
@@ -245,16 +264,9 @@ impl ChipAte {
                 self.v[vx as usize] = self.delay_timer;
             }
             Instruction::WaitKey { vx } => {
-                let mut found = None;
-                for (i, &key_state) in self.keypad.iter().enumerate() {
-                    if key_state == 1 {
-                        found = Some(i as u8);
-                        break;
-                    }
-                }
-                if let Some(key) = found {
+                if let Some(key) = self.pressed_key {
                     self.v[vx as usize] = key;
-                    self.keypad[key as usize] = 0;
+                    self.pressed_key = None;
                 } else {
                     self.pc -= 2;
                 }
@@ -274,7 +286,7 @@ impl ChipAte {
             Instruction::LoadFont { vx } => {
                 // set I to the memory address of the font sprite for digit Vx
                 // each sprite is 5 bytes, so Vx * 5 gives the offset from 0x000
-                self.i = 0x50 + (self.v[vx as usize] * 5) as u16;
+                self.i = FONT_START + (self.v[vx as usize] * 5) as u16;
             }
             Instruction::StoreBCD { vx } => {
                 // Convert Vx to binary-coded decimal and store at I, I+1, I+2
@@ -308,7 +320,6 @@ impl ChipAte {
             Instruction::WaitKey { vx } => {
                 if let Some(key) = self.pressed_key {
                     self.v[vx as usize] = key;
-                    self.keypad[key as usize] = 0;
                     self.pressed_key = None;
                     CycleStatus::Normal
                 } else {
@@ -334,66 +345,26 @@ impl ChipAte {
     pub fn set_sound_timer(&mut self, new_time: u8) {
         self.sound_timer = new_time
     }
-    fn get_register(&mut self, reg: u8) -> u8 {
-        match reg {
-            0x0 => self.v[0],
-            0x1 => self.v[1],
-            0x2 => self.v[2],
-            0x3 => self.v[3],
-            0x4 => self.v[4],
-            0x5 => self.v[5],
-            0x6 => self.v[6],
-            0x7 => self.v[7],
-            0x8 => self.v[8],
-            0x9 => self.v[9],
-            0xa => self.v[10],
-            0xb => self.v[11],
-            0xc => self.v[12],
-            0xd => self.v[13],
-            0xe => self.v[14],
-            0xf => self.v[15],
-            _ => {
-                panic!("unknown register: V{:X}", reg);
-            }
-        }
-    }
-    fn set_register(&mut self, reg: u8, byte: u8) {
-        match reg {
-            0x0 => self.v[0] = byte,
-            0x1 => self.v[1] = byte,
-            0x2 => self.v[2] = byte,
-            0x3 => self.v[3] = byte,
-            0x4 => self.v[4] = byte,
-            0x5 => self.v[5] = byte,
-            0x6 => self.v[6] = byte,
-            0x7 => self.v[7] = byte,
-            0x8 => self.v[8] = byte,
-            0x9 => self.v[9] = byte,
-            0xa => self.v[10] = byte,
-            0xb => self.v[11] = byte,
-            0xc => self.v[12] = byte,
-            0xd => self.v[13] = byte,
-            0xe => self.v[14] = byte,
-            0xf => self.v[15] = byte,
-            _ => {
-                panic!("unknown register: V{:X}", reg);
-            }
-        }
-    }
     pub fn push(&mut self, val: u16) {
-        self.stack[self.sp as usize] = val;
-        self.sp += 1;
+        if (self.sp as usize) < STACK_SIZE {
+            self.stack[self.sp as usize] = val;
+            self.sp += 1;
+        }
     }
     pub fn pop(&mut self) -> u16 {
-        self.sp -= 1;
-        self.stack[self.sp as usize]
+        if self.sp > 0 {
+            self.sp -= 1;
+            self.stack[self.sp as usize]
+        } else {
+            0
+        }
     }
 
     pub fn render_display(&self) -> String {
-        let mut output = String::with_capacity(64 * 32 + 32); // Pre-allocate for pixels + newlines
-        for y in 0..32 {
-            for x in 0..64 {
-                output.push(if self.display[y * 64 + x] == 1 {
+        let mut output = String::with_capacity(DISPLAY_WIDTH * DISPLAY_HEIGHT + DISPLAY_HEIGHT);
+        for y in 0..DISPLAY_HEIGHT {
+            for x in 0..DISPLAY_WIDTH {
+                output.push(if self.display[y * DISPLAY_WIDTH + x] == 1 {
                     '█'
                 } else {
                     ' '
@@ -409,7 +380,11 @@ impl ChipAte {
         }
         if self.sound_timer > 0 {
             self.sound_timer -= 1;
-            // In a real implementation, beep here when sound_timer > 0
+            if let Ok(mut active) = self.beep_active.lock() {
+                *active = true;
+            }
+        } else if let Ok(mut active) = self.beep_active.lock() {
+            *active = false;
         }
     }
 }

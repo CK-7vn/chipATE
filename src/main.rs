@@ -45,7 +45,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut ui = UI::new(terminal);
 
     let mut chip8 = ChipAte::new();
-    chip8.load_rom(rom_path)?;
+    if let Err(e) = chip8.load_rom(rom_path) {
+        eprintln!("Failed to load ROM: {}", e);
+        std::process::exit(1);
+    }
 
     let (_shutdown_tx, shutdown_rx) = oneshot::channel::<()>();
 
@@ -71,7 +74,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 break 'main_loop;
                             }
                             if let Some(mapped_key) = map_sdl_key(key) {
-                                chip8.keypad[mapped_key as usize] = if pressed { 1 } else { 0 };
+                                if pressed {
+                                    chip8.keypad[mapped_key as usize] = 1;
+                                    chip8.pressed_key = Some(mapped_key);
+                                } else {
+                                    chip8.keypad[mapped_key as usize] = 0;
+                                }
                             }
                         }
                     }
