@@ -23,11 +23,17 @@ impl AppEventHandler {
         tokio::task::spawn_local(async move {
             let sdl_context = sdl2::init().expect("failed to initialize SDL2");
             let video_subsystem = sdl_context.video().expect("failed to initialize SDL video");
-            let _window = video_subsystem
-                .window("hidden window", 0, 0)
-                .position(0, 1)
+            let window = video_subsystem
+                .window("ChipATE Input - Click for keyboard focus", 400, 100)
+                .position_centered()
                 .build()
                 .expect("failed to create SDL window");
+
+            // On Wayland, windows need a renderer to display
+            let mut canvas = window.into_canvas().build().expect("failed to create canvas");
+            canvas.set_draw_color(sdl2::pixels::Color::RGB(40, 40, 40));
+            canvas.clear();
+            canvas.present();
 
             let mut event_pump = sdl_context
                 .event_pump()

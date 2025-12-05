@@ -41,8 +41,8 @@ impl<B: Backend> UI<B> {
                 .x_bounds([0.0, 64.0])
                 .y_bounds([0.0, 32.0]);
 
-            let display_width = 64;
-            let display_height = 32 + 2;
+            let display_width = 64.min(size.width);
+            let display_height = (32 + 2).min(size.height);
             let x_offset = (size.width.saturating_sub(display_width)) / 2;
             let y_offset = (size.height.saturating_sub(display_height)) / 2;
             let display_area = Rect::new(x_offset, y_offset, display_width, display_height);
