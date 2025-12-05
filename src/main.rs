@@ -1,10 +1,10 @@
 use crate::chip_ate::{ChipAte, CycleStatus};
 use crate::ui::UI;
 use crossterm::{
+    event::KeyCode,
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
-use sdl2::keyboard::Keycode;
 use std::env;
 use std::io::stdout;
 use std::time::{Duration, Instant};
@@ -70,10 +70,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     match app_event {
                         events::AppEvent::Tick => {}
                         events::AppEvent::Key { key, pressed } => {
-                            if key == Keycode::Escape {
+                            if key == KeyCode::Esc {
                                 break 'main_loop;
                             }
-                            if let Some(mapped_key) = map_sdl_key(key) {
+                            if let Some(mapped_key) = map_key(key) {
                                 if pressed {
                                     chip8.keypad[mapped_key as usize] = 1;
                                     chip8.pressed_key = Some(mapped_key);
@@ -121,24 +121,24 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-fn map_sdl_key(key: Keycode) -> Option<u8> {
+fn map_key(key: KeyCode) -> Option<u8> {
     match key {
-        Keycode::Num1 => Some(0x1),
-        Keycode::Num2 => Some(0x2),
-        Keycode::Num3 => Some(0x3),
-        Keycode::Num4 => Some(0xC),
-        Keycode::Q => Some(0x4),
-        Keycode::W => Some(0x5),
-        Keycode::E => Some(0x6),
-        Keycode::R => Some(0xD),
-        Keycode::A => Some(0x7),
-        Keycode::S => Some(0x8),
-        Keycode::D => Some(0x9),
-        Keycode::F => Some(0xE),
-        Keycode::Z => Some(0xA),
-        Keycode::X => Some(0x0),
-        Keycode::C => Some(0xB),
-        Keycode::V => Some(0xF),
+        KeyCode::Char('1') => Some(0x1),
+        KeyCode::Char('2') => Some(0x2),
+        KeyCode::Char('3') => Some(0x3),
+        KeyCode::Char('4') => Some(0xC),
+        KeyCode::Char('q') => Some(0x4),
+        KeyCode::Char('w') => Some(0x5),
+        KeyCode::Char('e') => Some(0x6),
+        KeyCode::Char('r') => Some(0xD),
+        KeyCode::Char('a') => Some(0x7),
+        KeyCode::Char('s') => Some(0x8),
+        KeyCode::Char('d') => Some(0x9),
+        KeyCode::Char('f') => Some(0xE),
+        KeyCode::Char('z') => Some(0xA),
+        KeyCode::Char('x') => Some(0x0),
+        KeyCode::Char('c') => Some(0xB),
+        KeyCode::Char('v') => Some(0xF),
         _ => None,
     }
 }

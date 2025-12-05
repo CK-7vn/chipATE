@@ -57,13 +57,26 @@
 
 Output chipAte.type.gif
 
-
 Set Shell "fish"
-Set FontSize 32
-Set Width 2000
-Set Height 1800
-Sleep 3s
-Type@500ms "cargo run roms/br8kout.ch8" 
-Sleep 2s  
+Set FontSize 28
+Set Width 1400
+Set Height 1000
+Sleep 1s
+Type@100ms "cargo run roms/tictac.ch8"
 Enter
-Sleep 7s
+Sleep 2s
+Type "q"
+Sleep 500ms
+Type "e"
+Sleep 500ms
+Type "a"
+Sleep 500ms
+Type "x"
+Sleep 500ms
+Type "s"
+Sleep 500ms
+Type "w"
+Sleep 500ms
+Type "c"
+Sleep 2s
+Escape
